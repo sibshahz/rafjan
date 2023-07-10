@@ -448,7 +448,6 @@
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
-    <div id="rafjan-loader"></div>
     {%- if settings.loader_logo_checkbox -%}
       <div id="loading-overlay">
         <img src="{{ settings.loader_logo | img_url: 'master' }}" alt="Loading" />
@@ -525,7 +524,7 @@
         const myTimeout = setTimeout(preLoadFunction, 5000);
 
         function preLoadFunction() {
-          preloader.style.display = 'none';
+          preloader.classList.add("fading");
           clearTimeout(myTimeout);
         }
       </script>
