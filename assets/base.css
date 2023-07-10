@@ -2786,7 +2786,11 @@ details[open] > .header__submenu {
 .header__menu-item span {
   transition: text-decoration var(--duration-short) ease;
   text-decoration: none;
+<<<<<<< HEAD
   color:red;
+=======
+  color:yellowgreen;
+>>>>>>> cf1aa021c8300bd429b17e30fb91991a36ccaef7
 }
 
 .header__menu-item:hover span {
