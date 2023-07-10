@@ -409,8 +409,10 @@
       }
     {% endstyle %}
 
-    {{ 'rafjan-loader.css' | asset_url | stylesheet_tag }}
+
     {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'rafjan-loader.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'rafjan-loader.js' | asset_url }}" defer="defer"></script>
 
     {%- unless settings.type_body_font.system? -%}
       <link
@@ -447,78 +449,86 @@
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
     <div id="rafjan-loader"></div>
-    <div id="rafjan-content">
-      <a class="skip-to-content-link button visually-hidden" href="#MainContent">
-        {{ 'accessibility.skip_to_text' | t }}
-      </a>
+    {%- if settings.loader_logo_checkbox -%}
+      <div id="loading-overlay">
+        <img src="{{ settings.loader_logo | img_url: 'master' }}" alt="Loading" />
+      </div>
+    {%- endif -%}
 
-      {%- if settings.cart_type == 'drawer' -%}
-        {%- render 'cart-drawer' -%}
-      {%- endif -%}
+      <div id="rafjan-content">
+        <a class="skip-to-content-link button visually-hidden" href="#MainContent">
+          {{ 'accessibility.skip_to_text' | t }}
+        </a>
 
-      {% sections 'header-group' %}
+        {%- if settings.cart_type == 'drawer' -%}
+          {%- render 'cart-drawer' -%}
+        {%- endif -%}
 
-      <main
-        id="MainContent"
-        class="content-for-layout focus-none"
-        role="main"
-        tabindex="-1">
-        {{ content_for_layout }}
-      </main>
+        {% sections 'header-group' %}
 
-      {% sections 'footer-group' %}
+        <main
+          id="MainContent"
+          class="content-for-layout focus-none"
+          role="main"
+          tabindex="-1">
+          {{ content_for_layout }}
+        </main>
 
-      <ul hidden>
-        <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
-        <li id="a11y-new-window-message">{{ 'accessibility.link_messages.new_window' | t }}</li>
-      </ul>
+        {% sections 'footer-group' %}
 
+        <ul hidden>
+          <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
+          <li id="a11y-new-window-message">{{ 'accessibility.link_messages.new_window' | t }}</li>
+        </ul>
+
+        <script>
+          window.shopUrl = '{{ request.origin }}';
+          window.routes = {
+            cart_add_url: '{{ routes.cart_add_url }}',
+            cart_change_url: '{{ routes.cart_change_url }}',
+            cart_update_url: '{{ routes.cart_update_url }}',
+            cart_url: '{{ routes.cart_url }}',
+            predictive_search_url: '{{ routes.predictive_search_url }}'
+          };
+
+          window.cartStrings = {
+            error: `{{ 'sections.cart.cart_error' | t }}`,
+            quantityError: `{{ 'sections.cart.cart_quantity_error_html' | t: quantity: '[quantity]' }}`
+          };
+
+          window.variantStrings = {
+            addToCart: `{{ 'products.product.add_to_cart' | t }}`,
+            soldOut: `{{ 'products.product.sold_out' | t }}`,
+            unavailable: `{{ 'products.product.unavailable' | t }}`,
+            unavailable_with_option: `{{ 'products.product.value_unavailable' | t: option_value: '[value]' }}`
+          };
+
+          window.accessibilityStrings = {
+            imageAvailable: `{{ 'products.product.media.image_available' | t: index: '[index]' }}`,
+            shareSuccess: `{{ 'general.share.success_message' | t }}`,
+            pauseSlideshow: `{{ 'sections.slideshow.pause_slideshow' | t }}`,
+            playSlideshow: `{{ 'sections.slideshow.play_slideshow' | t }}`,
+            recipientFormExpanded: `{{ 'recipient.form.expanded' | t }}`,
+            recipientFormCollapsed: `{{ 'recipient.form.collapsed' | t }}`
+          };
+        </script>
+
+        {%- if settings.predictive_search_enabled -%}
+          <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+        {%- endif -%}
+
+      </div>
       <script>
-        window.shopUrl = '{{ request.origin }}';
-        window.routes = {
-          cart_add_url: '{{ routes.cart_add_url }}',
-          cart_change_url: '{{ routes.cart_change_url }}',
-          cart_update_url: '{{ routes.cart_update_url }}',
-          cart_url: '{{ routes.cart_url }}',
-          predictive_search_url: '{{ routes.predictive_search_url }}'
-        };
+        var preloader = document.getElementById('loading-overlay');
 
-        window.cartStrings = {
-          error: `{{ 'sections.cart.cart_error' | t }}`,
-          quantityError: `{{ 'sections.cart.cart_quantity_error_html' | t: quantity: '[quantity]' }}`
-        };
 
-        window.variantStrings = {
-          addToCart: `{{ 'products.product.add_to_cart' | t }}`,
-          soldOut: `{{ 'products.product.sold_out' | t }}`,
-          unavailable: `{{ 'products.product.unavailable' | t }}`,
-          unavailable_with_option: `{{ 'products.product.value_unavailable' | t: option_value: '[value]' }}`
-        };
+        const myTimeout = setTimeout(preLoadFunction, 5000);
 
-        window.accessibilityStrings = {
-          imageAvailable: `{{ 'products.product.media.image_available' | t: index: '[index]' }}`,
-          shareSuccess: `{{ 'general.share.success_message' | t }}`,
-          pauseSlideshow: `{{ 'sections.slideshow.pause_slideshow' | t }}`,
-          playSlideshow: `{{ 'sections.slideshow.play_slideshow' | t }}`,
-          recipientFormExpanded: `{{ 'recipient.form.expanded' | t }}`,
-          recipientFormCollapsed: `{{ 'recipient.form.collapsed' | t }}`
-        };
+        function preLoadFunction() {
+          preloader.style.display = 'none';
+          clearTimeout(myTimeout);
+        }
       </script>
-
-      {%- if settings.predictive_search_enabled -%}
-        <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
-      {%- endif -%}
-
-    </div>
-    <script>
-      var preloader = document.getElementById('rafjan-loader');
-
-      const myTimeout = setTimeout(preLoadFunction, 5000);
-
-      function preLoadFunction() {
-        preloader.style.display = 'none';
-        clearTimeout(myTimeout);
-      }
-    </script>
+    </body>
   </body>
 </html>

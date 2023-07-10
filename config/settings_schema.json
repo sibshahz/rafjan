@@ -37,6 +37,11 @@
     "name": "Loader setting",
     "settings": [
       {
+        "type": "checkbox",
+        "id": "loader_logo_checkbox",
+        "label": "Enable loader logo"
+      },
+      {
         "type": "image_picker",
         "id": "loader_logo",
         "label": "Loader Image Picker"
