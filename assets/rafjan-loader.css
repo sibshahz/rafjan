@@ -31,8 +31,8 @@
 	z-index: 9999;
   }
   #loading-overlay.fading{
-	animation: fadeOut ease forwards 3s ;
-	-webkit-animation: fadeOut ease forwards 3s ;
+	animation: fadeOut ease-out 1s;
+	-webkit-animation: fadeOut ease-out 1s;
 }
   @keyframes fadeOut {
 	0%{
