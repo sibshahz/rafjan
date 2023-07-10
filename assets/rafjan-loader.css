@@ -4,5 +4,7 @@
 	width: 100%;
 	height: 100vh;
 	background: #21242d var(--loader-image-url) no-repeat center;
+	background-image: var(--loader-image-url) no-repeat;
+
 	z-index: 999999999;
 }

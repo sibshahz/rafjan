@@ -39,7 +39,7 @@
       {
         "type": "image_picker",
         "id": "loader_logo",
-        "label": "t:settings_schema.logo.settings.logo_image.label"
+        "label": "Loader Image Picker"
       },
       {
         "type": "range",

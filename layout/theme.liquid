@@ -116,7 +116,7 @@
           , {{ scheme.settings.text.blue }}
           ;
           --payment-terms-background-color: rgb({{ scheme.settings.background.rgb }});
-          --loader-image-url: {{ scheme.settings.loader_logo }}
+
         }
       {% endfor %}
 
@@ -129,6 +129,8 @@
       :root {
         --font-body-family: {{ settings.type_body_font.family }}
         , {{ settings.type_body_font.fallback_families }}
+        ;
+        --loader-image-url: {{ settings.loader_logo.url }}
         ;
         --font-body-style: {{ settings.type_body_font.style }}
         ;
