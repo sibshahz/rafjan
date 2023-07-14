@@ -34,6 +34,42 @@
     ]
   },
   {
+    "name": "Loader setting",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "loader_logo_checkbox",
+        "label": "Enable loader logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "loader_logo",
+        "label": "Loader Image Picker"
+      },
+      {
+        "type": "range",
+        "id": "loader_logo_width",
+        "min": 50,
+        "max": 300,
+        "step": 10,
+        "default": 100,
+        "unit": "px",
+        "label": "t:settings_schema.logo.settings.logo_width.label"
+      },
+      {
+        "type": "video",
+        "id": "loader_video",
+        "label": "A loader video for site"
+      },
+      {
+        "type": "image_picker",
+        "id": "loader_favicon",
+        "label": "t:settings_schema.logo.settings.favicon.label",
+        "info": "t:settings_schema.logo.settings.favicon.info"
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.colors.name",
     "settings": [
       {
