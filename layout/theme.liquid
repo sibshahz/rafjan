@@ -410,11 +410,8 @@
     {% endstyle %}
 
 
-  {{ 'rafjan-loader.css' | asset_url | stylesheet_tag }}
   {{ 'base.css' | asset_url | stylesheet_tag }}
-
-    <script src="{{ 'rafjan-loader.js' | asset_url }}"></script>
-
+  
     {%- unless settings.type_body_font.system? -%}
       <link
         rel="preload"
@@ -449,11 +446,7 @@
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
-    {%- if settings.loader_logo_checkbox -%}
-      <div id="loading-overlay">
-        <img src="{{ settings.loader_logo | img_url }}" alt="Loading" />
-      </div>
-    {%- endif -%}
+    
 
         <a class="skip-to-content-link button visually-hidden" href="#MainContent">
           {{ 'accessibility.skip_to_text' | t }}
@@ -515,19 +508,6 @@
         {%- if settings.predictive_search_enabled -%}
           <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
         {%- endif -%}
-
-      <script>
-        var preloader = document.getElementById('loading-overlay');
-
-
-        const myTimeout = setTimeout(preLoadFunction, 5000);
-
-        function preLoadFunction() {
-          preloader.classList.add("fading");
-          preloader.style
-          clearTimeout(myTimeout);
-        }
-      </script>
     </body>
   </body>
 </html>
